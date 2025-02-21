@@ -5,6 +5,20 @@ const currentValue = ref('')
 const tags = ref<string[]>([])
 const emit = defineEmits(['onTagsUpdated'])
 const inputRef = ref<HTMLInputElement>()
+const tagInputStyles = [
+  'flex',
+  'flex-wrap',
+  'gap-1',
+  'p-1',
+  'bg-white',
+  'border-2',
+  'border-gray-300',
+  'rounded',
+  'shadow',
+]
+const tagStyles = ['flex', 'items-center', 'gap-1', 'p-1', 'border', 'border-gray-300', 'rounded']
+const buttonStyles = ['cursor-pointer', 'hover:text-red-700', 'transition-all']
+const inputStyles = ['border-none', 'outline-none', 'h-10']
 
 const handleClick = () => {
   inputRef.value?.focus()
@@ -32,26 +46,12 @@ const removeTag = (index: number) => {
 </script>
 
 <template>
-  <div
-    class="flex flex-wrap gap-1 p-1 bg-white border-2 border-gray-300 rounded shadow"
-    @click="handleClick"
-  >
-    <div
-      class="flex p-1 border border-gray-300 rounded items-center gap-1"
-      v-for="(tag, index) in tags"
-      :key="index"
-    >
+  <div :class="tagInputStyles" @click="handleClick">
+    <div :class="tagStyles" v-for="(tag, index) in tags" :key="index">
       {{ tag }}
-      <button class="cursor-pointer hover:text-red-700 transition-all" @click="removeTag(index)">
-        X
-      </button>
+      <button :class="buttonStyles" @click="removeTag(index)">X</button>
     </div>
-    <input
-      class="border-none outline-none h-10"
-      type="text"
-      v-model="currentValue"
-      @keyup="handleKeyUp"
-    />
+    <input :class="inputStyles" type="text" v-model="currentValue" @keyup="handleKeyUp" />
   </div>
 </template>
 
